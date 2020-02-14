@@ -1,0 +1,35 @@
+<script type="text/javascript">
+  
+  function redBall() {
+    return _.random(1, 26);
+  }
+
+  function pickNumbers() {
+    var numbers = _.range(1, 70);
+    var picked = [];
+
+    for (var i = 0; i < 5; i++) {
+      var index = _.random(0, (numbers.length - 1)); 
+      picked.push(numbers[index]);
+      numbers.splice(index, 1);
+    }
+
+    return picked
+      .sort(function (a, b) {return  a - b})
+      .join(" ");
+  }
+
+  $(document).ready(function() {
+    $("#numbers").text(pickNumbers()); 
+
+    $("#red-ball").text(redBall());
+  });
+</script>
+
+<section class="phx-hero">
+  <h1>Lotto Number Generator</h1>
+  <p> Numbers:  <span id="numbers"></span> <br />
+      Red ball: <span id="red-ball"></span>
+  </p>
+</section>
+
