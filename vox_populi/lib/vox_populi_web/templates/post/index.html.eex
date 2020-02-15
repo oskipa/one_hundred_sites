@@ -1,0 +1,14 @@
+<h2>The people's voice</h2>
+
+
+<span><%= link "Say something", to: Routes.post_path(@conn, :new) %></span>
+
+<p></p>
+<%= for post <- @posts do %>
+    <article>
+      <p>by: <%= post.author %> on: <%= "#{post.updated_at.day} of #{post.updated_at.month} , #{post.updated_at.year}" %></p>
+      <p><%= post.content %></p>
+    </article>
+
+<% end %>
+
