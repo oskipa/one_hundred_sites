@@ -1,0 +1,6 @@
+<h1>New User</h1>
+
+<p>Enter junk info. Don't enter any of your real user names or passwords</p>
+<%= render "form.html", Map.put(assigns, :action, Routes.user_path(@conn, :create)) %>
+
+<span><%= link "Back", to: Routes.user_path(@conn, :index) %></span>
