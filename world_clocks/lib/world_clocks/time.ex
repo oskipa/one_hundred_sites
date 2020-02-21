@@ -1,16 +1,17 @@
 defmodule WorldClocks.Time do
+  use Timex
 
   defstruct name: "", time: ""
 
   def utc() do
-    "UTC TIME"
+    Timex.now() |> Timex.format!("{h24}:{m}:{s}")
   end
 
   def local() do
-    "LOCAL TIME"
+    Timex.local() |> Timex.format!("{h24}:{m}:{s}")
   end
 
   def get(country) do
-    "Country Time"
+    Timex.now(country) |> Timex.format!("{h24}:{m}:{s}")
   end
 end
