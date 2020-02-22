@@ -3,39 +3,47 @@ defmodule WorldClocksWeb.TimeLive do
 
   def render(assigns) do
     ~L"""
-      UTC: <%= @utc %> <br />
-      Local: <%= @local %><br />
-      <%= @country.name  %> : <%= @country.time %>
+      <div class="clock"> <span class="time-name"> UTC:</span> <span class="clock-face"><%= @utc %></span> </div> 
+      <div class="clock" > <span class="time-name" > Local: </span> <span class="clock-face"><%= @local %></span> </div>
+      <div class="clock" > <span class="time-name" > <%= "ETC/GMT #{@country.offset}"  %> : </span> <span class="clock-face"><%= @country.time %></span> </div>
+      <p></p>
+      <button phx-click="inc_timezone">Increment Timezone</button>
+      <button phx-click="dec_timezone">Decrement Timezone</button>
     """
   end
 
-  def mount(_params, %{"country_name" => country_name},  socket) do
+  def mount(_params, %{"offset" => offset},  socket) do
       IO.puts "Mounting"
-      :timer.send_interval(10000, self(), :update)
     if connected?(socket) do
       IO.puts "connected. Setting timer."
+      :timer.send_interval(1000, self(), :update)
     end
     
-    {:ok, assign(socket, time_state(country_name))} 
+    {:ok, assign(socket, time_state(offset))} 
   end
 
   def handle_info(:update, socket) do
-    IO.puts "hitting info"
-    {:no_replay, assign(socket, time_state(socket.assigns_country_name))}
+    {:noreply, assign(socket, time_state(socket.assigns.offset))}
   end
 
-  def time_state(country_name) do
-    [{:country_name, country_name} | get_times(country_name) ] 
+  def handle_event("inc_timezone", _value, socket ) do
+    {:noreply, assign(socket, time_state(WorldClocks.Time.increment(socket.assigns.offset)))}
   end
 
-  def get_times(country) do
+  def handle_event("dec_timezone", _value, socket ) do
+    {:noreply, assign(socket, time_state(WorldClocks.Time.decrement(socket.assigns.offset)))}
+  end
+
+  def time_state(offset) do
+    [{:offset, offset} | get_times(offset) ] 
+  end
+
+  def get_times(offset) do
       [utc: WorldClocks.Time.utc, 
       local: WorldClocks.Time.local,
       country: %WorldClocks.Time{
-        name: country, 
-        time: WorldClocks.Time.get(country)}
+        offset: offset,
+        time: WorldClocks.Time.get(offset)}
       ]
   end
-
-
 end

@@ -1,0 +1,14 @@
+
+.clock {
+  font-size: 20pt;
+}
+
+.clock-face {
+  font-family: monospace;
+}
+
+.time-name {
+  width: 200px;
+  display: inline-block;
+  text-align: right;
+}

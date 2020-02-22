@@ -18,7 +18,7 @@ defmodule WorldClocksWeb.Router do
   scope "/", WorldClocksWeb do
     pipe_through :browser
 
-    live "/clocks", TimeLive, session: %{"country_name" => "America/Mexico_City"}
+    live "/clocks", TimeLive, session: %{"offset" => -5}
 
     get "/", PageController, :index
   end
