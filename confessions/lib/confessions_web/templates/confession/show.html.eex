@@ -1,0 +1,13 @@
+<h1>Show Confession</h1>
+
+<ul>
+
+  <li>
+    <strong>Content:</strong>
+    <%= @confession.content %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.confession_path(@conn, :edit, @confession) %></span>
+<span><%= link "Back", to: Routes.confession_path(@conn, :index) %></span>

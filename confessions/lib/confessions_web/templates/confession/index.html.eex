@@ -1,0 +1,26 @@
+<h1>Listing Confessions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Content</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for confession <- @confessions do %>
+    <tr>
+      <td><%= confession.content %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.confession_path(@conn, :show, confession) %></span>
+        <span><%= link "Edit", to: Routes.confession_path(@conn, :edit, confession) %></span>
+        <span><%= link "Delete", to: Routes.confession_path(@conn, :delete, confession), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Confession", to: Routes.confession_path(@conn, :new) %></span>

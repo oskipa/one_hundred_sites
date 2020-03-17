@@ -17,9 +17,10 @@ defmodule ConfessionsWeb.Router do
   scope "/", ConfessionsWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", ConfessionController, :index
+    resources "/confessions", ConfessionController
     resources "/user", UserController
-    resources "/sessions", SessionController, only: [:new, :create, :delete] 
+    resources "/sessions", SessionController, only: [:index, :new, :create, :delete]
   end
 
   # Other scopes may use custom stacks.

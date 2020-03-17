@@ -1,0 +1,5 @@
+<h1>Edit Confession</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.confession_path(@conn, :update, @confession)) %>
+
+<span><%= link "Back", to: Routes.confession_path(@conn, :index) %></span>
